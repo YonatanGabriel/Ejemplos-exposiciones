@@ -1,0 +1,226 @@
+create database prueba;
+use prueba;
+create table jugador (id int primary key, nombre VARCHAR(40));
+create table pichichi (id int primary key, goles int);
+
+insert into jugador values (1,"Ronaldo");
+insert into jugador values (2,"Messi");
+insert into jugador values (3,"Guedes");
+insert into jugador values (4,"Griezmann");
+insert into jugador values (5,"Suarez");
+
+insert into pichichi values (1,35);
+insert into pichichi values (3,20);
+insert into pichichi values (5,15);
+
+delete from pichichi where id=2;
+
+select*from jugador;
++----+-----------+
+| id | nombre    |
++----+-----------+
+|  1 | Ronaldo   |
+|  2 | Messi     |
+|  3 | Guedes    |
+|  4 | Griezmann |
+|  5 | Suarez    |
++----+-----------+
+select*from pichichi;
++----+-------+
+| id | goles |
++----+-------+
+|  1 |    35 |
+|  3 |    20 |
+|  5 |    15 |
++----+-------+
+
+select*from jugador join pichichi;
++----+-----------+----+-------+
+| id | nombre    | id | goles |
++----+-----------+----+-------+
+|  1 | Ronaldo   |  5 |    15 |
+|  1 | Ronaldo   |  3 |    20 |
+|  1 | Ronaldo   |  1 |    35 |
+|  2 | Messi     |  5 |    15 |
+|  2 | Messi     |  3 |    20 |
+|  2 | Messi     |  1 |    35 |
+|  3 | Guedes    |  5 |    15 |
+|  3 | Guedes    |  3 |    20 |
+|  3 | Guedes    |  1 |    35 |
+|  4 | Griezmann |  5 |    15 |
+|  4 | Griezmann |  3 |    20 |
+|  4 | Griezmann |  1 |    35 |
+|  5 | Suarez    |  5 |    15 |
+|  5 | Suarez    |  3 |    20 |
+|  5 | Suarez    |  1 |    35 |
++----+-----------+----+-------+
+
+select*from jugador join pichichi on (jugador.id=pichichi.id);
++----+---------+----+-------+
+| id | nombre  | id | goles |
++----+---------+----+-------+
+|  1 | Ronaldo |  1 |    35 |
+|  3 | Guedes  |  3 |    20 |
+|  5 | Suarez  |  5 |    15 |
++----+---------+----+-------+
+
+select*from jugador natural join pichichi;
++----+---------+-------+
+| id | nombre  | goles |
++----+---------+-------+
+|  1 | Ronaldo |    35 |
+|  3 | Guedes  |    20 |
+|  5 | Suarez  |    15 |
++----+---------+-------+
+
+insert into pichichi values (11,6);
+insert into pichichi values (12,3);
+
+ select * from jugador LEFT JOIN pichichi ON(jugador.id=pichichi.id);
+ +----+-----------+------+-------+
+| id | nombre    | id   | goles |
++----+-----------+------+-------+
+|  1 | Ronaldo   |    1 |    35 |
+|  2 | Messi     | NULL |  NULL |
+|  3 | Guedes    |    3 |    20 |
+|  4 | Griezmann | NULL |  NULL |
+|  5 | Suarez    |    5 |    15 |
++----+-----------+------+-------+
+
+ select * from jugador RIGHT JOIN pichichi ON(jugador.id=pichichi.id);
+ +------+---------+----+-------+
+| id   | nombre  | id | goles |
++------+---------+----+-------+
+|    1 | Ronaldo |  1 |    35 |
+|    3 | Guedes  |  3 |    20 |
+|    5 | Suarez  |  5 |    15 |
+| NULL | NULL    | 11 |     6 |
+| NULL | NULL    | 12 |     3 |
++------+---------+----+-------+
+
+select * from jugador NATURAL RIGHT JOIN pichichi;
++----+-------+---------+
+| id | goles | nombre  |
++----+-------+---------+
+|  1 |    35 | Ronaldo |
+|  3 |    20 | Guedes  |
+|  5 |    15 | Suarez  |
+| 11 |     6 | NULL    |
+| 12 |     3 | NULL    |
++----+-------+---------+
+
+select * from jugador NATURAL LEFT JOIN pichichi;
++----+-----------+-------+
+| id | nombre    | goles |
++----+-----------+-------+
+|  1 | Ronaldo   |    35 |
+|  2 | Messi     |  NULL |
+|  3 | Guedes    |    20 |
+|  4 | Griezmann |  NULL |
+|  5 | Suarez    |    15 |
++----+-----------+-------+
+
+
+create table piezas (codigo int primary key, nombre varchar(10));
+create table proveedores (id int primary key, nombre varchar(10));
+create table suministra (codigoPieza int, idProveedores int, precio int, primary key (codigoPieza, idProveedores));
+
+
+insert into piezas values (1,"poliet23"),(2,"alum35"),(3,"etile53");
+select*from piezas;
++--------+----------+
+| codigo | nombre   |
++--------+----------+
+|      1 | poliet23 |
+|      2 | alum35   |
+|      3 | etile53  |
++--------+----------+
+
+insert into proveedores values (1001,"sipem"), (1002,"alcupla"), (1003,"dragados"), (1004,"femeval");
+select*from proveedores;
++------+----------+
+| id   | nombre   |
++------+----------+
+| 1001 | sipem    |
+| 1002 | alcupla  |
+| 1003 | dragados |
+| 1004 | femeval  |
++------+----------+
+
+insert into suministra values (1,1001,28),(1,1002,30),(1,1003,23),(2,1001,20),(2,1002,21),(3,1002,44),(3,1004,34);
+select*from suministra;
++-------------+---------------+--------+
+| codigoPieza | idProveedores | precio |
++-------------+---------------+--------+
+|           1 |          1001 |     28 |
+|           1 |          1002 |     30 |
+|           1 |          1003 |     23 |
+|           2 |          1001 |     20 |
+|           2 |          1002 |     21 |
+|           3 |          1002 |     44 |
+|           3 |          1004 |     34 |
++-------------+---------------+--------+
+
+select nombre from proveedores where id in (select idProveedores from suministra where codigoPieza=1);
++----------+
+| nombre   |
++----------+
+| sipem    |
+| alcupla  |
+| dragados |
++----------+
+
+create table empleado (id_empleado int primary key,nombre varchar(20), departamento varchar(20), salario int);
+insert into empleado values (1,"Ana", "Ventas", 1000),(2,"Juan", "Marketing", 1500),(3,"María", "Ventas", 1200),(4,"Pedro", "Finanzas", 1800),(5,"Sofía", "Ventas", 1100);
+select*from empleado;
++-------------+--------+--------------+---------+
+| id_empleado | nombre | departamento | salario |
++-------------+--------+--------------+---------+
+|           1 | Ana    | Ventas       |    1000 |
+|           2 | Juan   | Marketing    |    1500 |
+|           3 | María  | Ventas       |    1200 |
+|           4 | Pedro  | Finanzas     |    1800 |
+|           5 | Sofía  | Ventas       |    1100 |
++-------------+--------+--------------+---------+
+
+
+SELECT nombre FROM empleado WHERE departamento != 'Ventas' AND salario > ANY (SELECT salario FROM empleado WHERE departamento = 'Ventas');
++--------+
+| nombre |
++--------+
+| Juan   |
+| Pedro  |
++--------+
+SELECT nombre FROM empleado WHERE departamento != ALL (SELECT departamento FROM empleado WHERE salario > 1400);
++--------+
+| nombre |
++--------+
+| Ana    |
+| María  |
+| Sofía  |
++--------+
+SELECT nombre FROM empleado WHERE departamento IN ('Ventas', 'Marketing');
++--------+
+| nombre |
++--------+
+| Ana    |
+| Juan   |
+| María  |
+| Sofía  |
++--------+
+SELECT nombre FROM empleado WHERE departamento NOT IN ('Finanzas');
++--------+
+| nombre |
++--------+
+| Ana    |
+| Juan   |
+| María  |
+| Sofía  |
++--------+
+
+
+
+
+
+
+

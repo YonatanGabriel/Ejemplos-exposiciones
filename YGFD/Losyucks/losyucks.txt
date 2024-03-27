@@ -1,0 +1,155 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 24
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database losyucks;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use losyucks;
+Database changed
+mysql> create table granciudad;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE granciudad;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE granciudad(
+    -> id int primary key,
+    -> nombre varchar(100),
+    -> origen varchar (100),
+    -> fecha DATE);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe granciudad;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| id     | int          | NO   | PRI | NULL    |       |
+| nombre | varchar(100) | YES  |     | NULL    |       |
+| origen | varchar(100) | YES  |     | NULL    |       |
+| fecha  | date         | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into granciudad(id,nombre,origen,fecha) VALUES(
+    -> 2,"madrid","ciudad iberica","111 01 02"),
+    -> (3,"valencia","ciudad iberica","3314-01-03"),
+    -> (4,"zaragoza","caesaraugusta",NULL),
+    -> (5,"Bilbao","Ciudad iberic",NULL),
+    -> (6,"Malaga","Ciudad iberica",NULL);
+ERROR 1292 (22007): Incorrect date value: '111 01 02' for column 'fecha' at row 1
+mysql> insert into granciudad(id,nombre,origen,fecha) VALUES(
+    ->     -> 2,"madrid","ciudad iberica","111 01 02"),
+    ->     -> (3,"valencia","ciudad iberica","3314-01-03"),
+    ->     -> (4,"zaragoza","caesaraugusta",NULL),
+    ->     -> (5,"Bilbao","Ciudad iberic",NULL),
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> 2,"madrid","ciudad iberica","111 01 02"),
+    -> (3,"valencia","ciudad iberic' at line 2
+mysql> insert into granciudad(id,nombre,origen,fecha) VALUES(
+    -> 2,"madrid","ciudad iberica","111-01-02"),
+    -> (3,"valencia","ciudad iberica","3314-01-03"),
+    -> (4,"zaragoza","caesaraugusta",NULL),
+    -> (5,"Bilbao","Ciudad iberic",NULL),
+    -> (6,"Malaga","Ciudad iberica",NULL);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> delte from granciudad where id=6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delte from granciudad where id=6' at line 1
+mysql> delete from granciudad where id= 6;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> describe granciudad;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| id     | int          | NO   | PRI | NULL    |       |
+| nombre | varchar(100) | YES  |     | NULL    |       |
+| origen | varchar(100) | YES  |     | NULL    |       |
+| fecha  | date         | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> delte from granciudad  order by nombre asc limit 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delte from granciudad  order by nombre asc limit 2' at line 1
+mysql> delete from granciudad  order by nombre asc limit 2;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select*from granciudad;
++----+----------+----------------+------------+
+| id | nombre   | origen         | fecha      |
++----+----------+----------------+------------+
+|  3 | valencia | ciudad iberica | 3314-01-03 |
+|  4 | zaragoza | caesaraugusta  | NULL       |
++----+----------+----------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from granciudad order by nombre asc;
++----+----------+----------------+------------+
+| id | nombre   | origen         | fecha      |
++----+----------+----------------+------------+
+|  3 | valencia | ciudad iberica | 3314-01-03 |
+|  4 | zaragoza | caesaraugusta  | NULL       |
++----+----------+----------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from granciudad  order by fecha asc limit 2;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> describe granciudad;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| id     | int          | NO   | PRI | NULL    |       |
+| nombre | varchar(100) | YES  |     | NULL    |       |
+| origen | varchar(100) | YES  |     | NULL    |       |
+| fecha  | date         | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select*from granciudad order by fecha asc;
+Empty set (0.00 sec)
+
+mysql> insert into granciudad(id,nombre,origen,fecha) VALUES(
+    -> 2,"madrid","ciudad iberica","111-01-02"),
+    -> (3,"valencia","ciudad iberica","3314-01-03"),
+    -> (4,"zaragoza","caesaraugusta",NULL),
+    -> (5,"Bilbao","Ciudad iberic",NULL),
+    -> (6,"Malaga","Ciudad iberica",NULL);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select*from granciudad order by fecha asc;
++----+----------+----------------+------------+
+| id | nombre   | origen         | fecha      |
++----+----------+----------------+------------+
+|  4 | zaragoza | caesaraugusta  | NULL       |
+|  5 | Bilbao   | Ciudad iberic  | NULL       |
+|  6 | Malaga   | Ciudad iberica | NULL       |
+|  2 | madrid   | ciudad iberica | 0111-01-02 |
+|  3 | valencia | ciudad iberica | 3314-01-03 |
++----+----------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from granciudad order by fecha desc;
++----+----------+----------------+------------+
+| id | nombre   | origen         | fecha      |
++----+----------+----------------+------------+
+|  3 | valencia | ciudad iberica | 3314-01-03 |
+|  2 | madrid   | ciudad iberica | 0111-01-02 |
+|  4 | zaragoza | caesaraugusta  | NULL       |
+|  5 | Bilbao   | Ciudad iberic  | NULL       |
+|  6 | Malaga   | Ciudad iberica | NULL       |
++----+----------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql>
